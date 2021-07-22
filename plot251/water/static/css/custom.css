@@ -1,0 +1,95 @@
+body {
+    font-family: "Roboto", sans-serif;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #2f2f2f;
+    font-weight: 300;
+}
+
+p {
+    color: #000000;
+    font-size: 15px;
+    line-height: 2;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+/* :: Header Area CSS */
+.header-area {
+    position: fixed;
+    z-index: 995;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    background-color: transparent;
+    padding: 0px 20px;
+}
+
+.header-area .logo-area a {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 100;
+}
+
+@media only screen and (max-width: 767px) {
+    .header-area .logo-area a {
+        font-size: 24px;
+    }
+}
+
+.header-area .menu-content-area .header-social-area {
+    margin-right: 30px;
+}
+
+.header-area .menu-content-area .header-social-area a {
+    font-size: 18px;
+    padding: 0 10px;
+    color: #ffffff;
+}
+
+@media only screen and (max-width: 767px) {
+    .header-area .menu-content-area .header-social-area a {
+        padding: 0 5px;
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .header-area .menu-content-area .header-social-area {
+        margin-right: 15px;
+    }
+}
+
+.header-area.sticky {
+    background-color: #232323;
+}
+
+@media only screen and (max-width: 767px) {
+    .header-area {
+        padding: 0px 0;
+    }
+}

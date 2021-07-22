@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!---- Change address bar color Chrome, Firefox OS and Opera ---->
+	<meta name="theme-color" content="#232323" />
+
+	<!---- iOS Safari ---->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#232323">
+
+	<title>Plot251 {% block title %} {% endblock %}</title>
+
+	{% load static %}
+	<!-- Favicon  -->
+	<link rel="icon" href="{% static '/img/favicon-32x32.png' %}">
+
+	<!-- Styles -->
+	<link href="{% static 'css/app.css' %}" rel="stylesheet">
+	<link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+	<!-- Scripts -->
+	<script src="{% static 'js/app.js' %}" defer></script>
+
+	<!-- Fonts -->
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+	<!---- IOS support ---->
+	<link rel="apple-touch-icon" href="storage/img/favicon-32x32.png">
+	<meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+</head>
+
+<body>
+	<div id="app">
+
+		<!-- ***** Header Area Start ***** -->
+		<header style="background-color: #232323" class="header-area">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="menu-area d-flex justify-content-between">
+							<!-- Logo Area  -->
+							<div class="logo-area">
+								<!-- @auth -->
+								<!-- @ifAuth::user->name == "Admin" -->
+								<a href="/water/">Plot 251</a>
+								<!-- @endif -->
+								<!-- @else -->
+								<!-- <a href="#">Plot 251</a> -->
+								<!-- @endauth -->
+							</div>
+
+							<div class="menu-content-area d-flex align-items-center">
+								<!-- Header Social Area -->
+								<div class="header-social-area d-flex align-items-center">
+									<!-- Authentication Links -->
+									{% if user.is_authenticated %}
+									{% if user.is_superuser %}
+									<div class="dropdown">
+										<a href="#" class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											{{ request.user.username }}
+										</a>
+										<div style="border-radius: 0;" class="dropdown-menu dropdown-menu-right m-0 p-0"
+											aria-labelledby="dropdownMenuButton">
+											<a href='/admin/water/waterreadings/add/'
+												class="p-3 dropdown-item border-bottom">
+												<h6>Add readings</h6>
+											</a>
+											<a href="/admin/water/waterpayments/add/"
+												class="p-3 dropdown-item border-bottom">
+												<h6>Add payments</h6>
+											</a>
+											{% else %}
+											<a href="/apartment/0" class="p-3 dropdown-item border-bottom">
+												<h6>My Account</h6>
+											</a>
+											{% endif %}
+											<a href="{% url 'logout' %}" class="p-3 dropdown-item" onclick="event.preventDefault;
+									                                                     document.getElementById('logout-form').submit;">
+												<h6>Logout</h6>
+											</a>
+											<form id="logout-form" action=" route'logout' " method="POST"
+												style="display: none;">
+												<!-- @csrf -->
+											</form>
+										</div>
+									</div>
+									{% else %}
+									<li class="nav-item">
+										<a class="display-4" href="#">Login</a>
+									</li>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- ***** Header Area End ***** -->
+		<br>
+
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<br>
+				<br>
+				<!-- @include'inc/messages' -->
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+
+		<main class="py-4">
+			{% block content %}{% endblock %}
+		</main>
+	</div>
+</body>
+
+</html>
