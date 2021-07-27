@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	'mathfilters',
 	'water.apps.WaterConfig',
     'django.contrib.admin',
     'django.contrib.auth',

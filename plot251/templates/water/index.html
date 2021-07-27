@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
 {% block content %}
+{% load mathfilters %}
 <div class="row">
 	<div class="col-sm-2"></div>
 	<div class="col-sm-8">
@@ -8,7 +9,7 @@
 			<h1 style="color: #209CEE;">Plot 251 Management</h1>
 			<h2>Water Bill</h2>
 
-			<!-- <h3>
+			<h3>
 				<a href="/water/{{ today.month | add:1 }}" class="btn btn-success rounded-0 float-left">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 						class="bi bi-chevron-left" viewBox="0 0 16 16">
@@ -26,9 +27,9 @@
 							d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
 					</svg>
 				</a>
-			</h3> -->
+			</h3>
 			<br>
-			{% if waterReadings %}
+			{% if lastReading %}
 			<div class="overflow-auto">
 				<table class="table table-hover">
 					<tr>
@@ -47,11 +48,11 @@
 								<td>{{ user.username }}</td>
 								<td>{{ user.name }}</td>
 								<td>{{ user.email }}</td>
-								<td>{{ user.units }}</td>
-								<td class="text-primary">{{ user.litres }}</td>
-								<td class="text-success">KES {% widthratio units 1 100 %}</td>
-								{% if waterPayments %}
-								<td class="text-success">KES {{ waterPayment.amount }}</td>
+								<td>{{ user.lastReading|sub:user.lastReading2 }}</td>
+								<td class="text-primary">{{ user.lastReading|sub:user.lastReading2|mul:1000 }}</td>
+								<td class="text-success">KES {{ user.lastReading|sub:user.lastReading2|mul:100 }}</td>
+								{% if user.paid %}
+								<td class="text-success">KES {{ user.paid }}</td>
 								{% else %}
 								<td class="text-danger">KES 0</td>
 								{% endif %}
@@ -61,19 +62,19 @@
 					{% else %}
 						{% for key, user in getUsers.items %}
 							{% if request.user == user.username %}
-								<tr>
-									<td>{{ user.username }}</td>
-									<td>{{ user.name }}</td>
-									<td>{{ user.email }}</td>
-									<td>{{ user.units }}</td>
-									<td class="text-primary">{{ user.litres }}</td>
-									<td class="text-success">KES {% widthratio units 1 100 %}</td>
-									{% if waterPayments %}
-									<td class="text-success">KES {{ waterPayment.amount }}</td>
-									{% else %}
-									<td class="text-danger">KES 0</td>
-									{% endif %}
-								</tr>
+							<tr>
+								<td>{{ user.username }}</td>
+								<td>{{ user.name }}</td>
+								<td>{{ user.email }}</td>
+								<td>{{ user.lastReading|sub:user.lastReading2 }}</td>
+								<td class="text-primary">{{ user.lastReading|sub:user.lastReading2|mul:1000 }}</td>
+								<td class="text-success">KES {{ user.lastReading|sub:user.lastReading2|mul:100 }}</td>
+								{% if user.paid %}
+								<td class="text-success">KES {{ user.paid }}</td>
+								{% else %}
+								<td class="text-danger">KES 0</td>
+								{% endif %}
+							</tr>
 							{% endif %}
 						{% endfor %}
 					{% endif %}
@@ -81,10 +82,10 @@
 						<td>Totals</td>
 						<td></td>
 						<td></td>
-						<td>{{ totalUnits }}</td>
-						<td class="text-primary">{% widthratio totalUnits 1 1000 %}</td>
-						<td class="text-success">KES {% widthratio totalUnits 1 100 %}</td>
-						<td class="text-success">KES {{ totalPayments }}</td>
+						<td>{{ lastReadingTot|sub:lastReadingTot2 }}</td>
+						<td class="text-primary">{{ lastReadingTot|sub:lastReadingTot2|mul:1000 }}</td>
+						<td class="text-success">KES {{ lastReadingTot|sub:lastReadingTot2|mul:100 }}</td>
+						<td class="text-success">KES {{ waterPaymentTot }}</td>
 					</tr>
 				</table>
 			</div>
